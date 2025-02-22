@@ -55,7 +55,7 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-### 4️5️⃣ Ejecuta las migraciones de la base de datos:
+### 5️⃣ Ejecuta las migraciones de la base de datos:
 ```sh
 	python manage.py makemigrations
 	python manage.py migrate 
