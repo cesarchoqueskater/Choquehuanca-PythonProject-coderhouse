@@ -7,7 +7,7 @@ class Blog(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    author = models.CharField(max_length=40)
+    author = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
     publication_date = models.DateTimeField(null=True,blank=True)
     is_published = models.BooleanField(default=True)
