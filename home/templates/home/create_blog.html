@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create Blog</title>
 </head>
 <body>
     <nav>
@@ -11,6 +11,10 @@
         <a href="{% url "create_blog" %}">Create Blog</a>
         <a href="{% url "list_blog" %}">List Blogs</a>
     </nav>
-    <h1>Vista Index.html Dentro</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{formContent}}
+        <button type="submit">Create Blog</button>
+    </form>
 </body>
 </html>

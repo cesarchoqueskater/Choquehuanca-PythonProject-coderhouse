@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>List Blog</title>
 </head>
 <body>
     <nav>
@@ -11,6 +11,20 @@
         <a href="{% url "create_blog" %}">Create Blog</a>
         <a href="{% url "list_blog" %}">List Blogs</a>
     </nav>
-    <h1>Vista Index.html Dentro</h1>
+    <h1>List Blogs</h1>
+    <form action="">
+        {{formContent}}
+        <button type="submit">Search</button>
+    </form>
+    {% if blogs %}
+    <ul>
+        {% for blog  in  blogs%}
+        <li>{{blog}}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No existen blogs cargados</p>
+    {% endif %}
+
 </body>
 </html>
