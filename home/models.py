@@ -12,7 +12,8 @@ class Blog(models.Model):
     publication_date = models.DateTimeField(null=True,blank=True)
     is_published = models.BooleanField(default=True)
     tags = models.CharField(max_length=200, null=True, blank=True)
+    img_cover = models.ImageField(upload_to="blogs", null=True, blank=True)
 
 
     def __str__(self):
-        return f"{self.title} {self.author}"
+        return f"{self.title}, {self.author}"

@@ -1,0 +1,14 @@
+{% extends "template_base.html" %}
+
+{% block content %}
+
+{% block title_head %} <h1>Login</h1> {% endblock title_head %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ formContent }}
+    <input type="submit" value="Login">
+</form>
+
+
+{% endblock content %}

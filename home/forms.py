@@ -10,6 +10,7 @@ class CreateBlog(forms.Form):
     publication_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class' : 'form-control'}), required=False)
     is_published = forms.BooleanField(required=False,widget=forms.CheckboxInput(attrs={'type': 'checkbox','class': 'form-check-input'}))
     tags = forms.CharField(required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    img_cover = forms.ImageField(required=False)
 
 class SearchBlog(forms.Form):
     title = forms.CharField(max_length=100, required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
