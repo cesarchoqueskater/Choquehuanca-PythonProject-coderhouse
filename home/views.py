@@ -4,7 +4,11 @@ from django.http import HttpResponse
 from datetime import datetime
 
 from home.models import Blog
-from home.forms import CreateBlog, SearchBlog
+from home.forms import CreateBlog, SearchBlog, UpdateBlog
+
+
+from django.views.generic.edit import UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
 def home(request):
@@ -46,3 +50,41 @@ def list_blog(request):
         author_to_search = formContent.cleaned_data.get('author')
         blogs = Blog.objects.filter( title__icontains = title_to_search , author__icontains= author_to_search)
     return render(request, 'home/list_blog.html', {'blogs' : blogs, 'formContent' : formContent})
+
+
+def details_blog(request, id):
+    blog = Blog.objects.get(id=id)
+    return render(request, 'home/details_blog.html', {'blog': blog})
+
+
+def delete_blog(request, id):
+    blog = Blog.objects.get(id=id)
+    blog.delete()
+    return redirect('list_blog')
+
+def update_blog(request, id):
+    
+    blog = Blog.objects.get(id=id)
+    
+    if request.method == "POST":
+        formContent = UpdateBlog(request.POST, instance=blog)
+        if formContent.is_valid():
+            formContent.save()
+            return redirect('list_blog')
+    else:
+        formContent = UpdateBlog(instance=blog)
+    
+    return render(request, 'home/update_blog.html', {'form': formContent})
+
+
+class UpdateBlogView(UpdateView):
+    model = Blog
+    template_name = "home/CBV/update_blog.html"
+    #fields = "__all__"
+    form_class = UpdateBlog
+    success_url = reverse_lazy('list_blog')
+
+class DeleteBlogView(DeleteView):
+    model = Blog
+    template_name = "home/CBV/delete_blog.html"
+    success_url = reverse_lazy('list_blog')

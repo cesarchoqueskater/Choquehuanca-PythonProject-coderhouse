@@ -1,0 +1,15 @@
+{% extends "template_base.html" %}
+
+
+{% block content %}
+
+{% block title_head %} <h1>Delete Blog</h1> {% endblock title_head %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>Confirma que quiere eliminar el auto: {{blog}}</p>
+    <input type="submit" value="Delete">
+</form>
+
+
+{% endblock content %}
