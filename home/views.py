@@ -9,6 +9,8 @@ from home.forms import CreateBlog, SearchBlog, UpdateBlog
 
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -51,11 +53,10 @@ def list_blog(request):
         blogs = Blog.objects.filter( title__icontains = title_to_search , author__icontains= author_to_search)
     return render(request, 'home/list_blog.html', {'blogs' : blogs, 'formContent' : formContent})
 
-
+@login_required
 def details_blog(request, id):
     blog = Blog.objects.get(id=id)
     return render(request, 'home/details_blog.html', {'blog': blog})
-
 
 def delete_blog(request, id):
     blog = Blog.objects.get(id=id)
@@ -77,14 +78,14 @@ def update_blog(request, id):
     return render(request, 'home/update_blog.html', {'form': formContent})
 
 
-class UpdateBlogView(UpdateView):
+class UpdateBlogView(LoginRequiredMixin, UpdateView):
     model = Blog
     template_name = "home/CBV/update_blog.html"
     #fields = "__all__"
     form_class = UpdateBlog
     success_url = reverse_lazy('list_blog')
 
-class DeleteBlogView(DeleteView):
+class DeleteBlogView(LoginRequiredMixin, DeleteView):
     model = Blog
     template_name = "home/CBV/delete_blog.html"
     success_url = reverse_lazy('list_blog')
