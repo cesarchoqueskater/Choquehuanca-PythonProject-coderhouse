@@ -18,7 +18,7 @@ def login(request):
 
             django_login(request, usuario)
 
-            #InfoExtra.objects.get_or_create(user=usuario)
+            InfoExtra.objects.get_or_create(user=usuario)
 
             return redirect("home")
     else:
@@ -40,14 +40,24 @@ def register(request):
     return render(request, "users/register.html", {"formContent": formContent})
 
 def edit_profile(request):
+
+    #Lo llamamos en minuscula el request.user.infoextra
+    info_extra = request.user.infoextra
+    
     if request.method == "POST":
-        formContent = MyUpdateForm(request.POST, instance=request.user)
+        formContent = MyUpdateForm(request.POST, request.FILES , instance=request.user)
         if formContent.is_valid():
+
+            if formContent.cleaned_data.get('avatar'):
+                info_extra.avatar = formContent.cleaned_data.get('avatar')
+
+            info_extra.save()
+
             formContent.save()
-            
+
             return redirect("home")
     else:
-        formContent = MyUpdateForm(instance=request.user)
+        formContent = MyUpdateForm(instance=request.user, initial={'avatar' : info_extra.avatar})
 
     return render(request, "users/edit_profile.html", {"formContent": formContent})
 
