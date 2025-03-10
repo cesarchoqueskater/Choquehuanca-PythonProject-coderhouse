@@ -1,8 +1,13 @@
 from django.shortcuts import redirect, render
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm, UserChangeForm
 from django.contrib.auth import login as django_login
-from django.urls import reverse_lazy
 from users.models import InfoExtra
+
+from users.forms import MyCreationForm,MyUpdateForm
+
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
+
 # Create your views here.
 
 def login(request):
@@ -13,7 +18,7 @@ def login(request):
 
             django_login(request, usuario)
 
-            InfoExtra.objects.get_or_create(user=usuario)
+            #InfoExtra.objects.get_or_create(user=usuario)
 
             return redirect("home")
     else:
@@ -21,3 +26,31 @@ def login(request):
 
     return render(request, "users/login.html", {"formContent": formContent})
 
+
+def register(request):
+    if request.method == "POST":
+        formContent = MyCreationForm(request.POST)
+        if formContent.is_valid():
+            formContent.save()
+            
+            return redirect("login")
+    else:
+        formContent = MyCreationForm()
+
+    return render(request, "users/register.html", {"formContent": formContent})
+
+def edit_profile(request):
+    if request.method == "POST":
+        formContent = MyUpdateForm(request.POST, instance=request.user)
+        if formContent.is_valid():
+            formContent.save()
+            
+            return redirect("home")
+    else:
+        formContent = MyUpdateForm(instance=request.user)
+
+    return render(request, "users/edit_profile.html", {"formContent": formContent})
+
+class change_password(PasswordChangeView):
+    template_name = 'users/change_password.html'
+    success_url = reverse_lazy('home')

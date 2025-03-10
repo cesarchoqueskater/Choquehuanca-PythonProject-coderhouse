@@ -25,6 +25,9 @@
               <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
             </form>
             -->
+            <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" data-landmark-index="2">
+              <a class="nav-link link-body-emphasis" href="{% url 'register' %}">Register</a>
+            </div>
             {% if request.user.is_authenticated  %}
               <div class="dropdown text-end">
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -32,8 +35,7 @@
                   {{ request.user.username }}
                 </a>
                 <ul class="dropdown-menu text-small">
-                  <li><a class="dropdown-item" href="#">New project...</a></li>
-                  <li><a class="dropdown-item" href="#">Settings</a></li>
+                  <li><a class="dropdown-item" href=" {% url "edit_profile" %} ">Edit Profile</a></li>
                   <li><a class="dropdown-item" href="#">Profile</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
@@ -45,7 +47,9 @@
                 </ul>
               </div>
             {% else %}
+            <div class="d-flex spa">
               <a class="nav-link link-body-emphasis" href="{% url 'login' %}">Login</a>
+            </div>
             {% endif %}
            
           </div>
