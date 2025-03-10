@@ -1,0 +1,27 @@
+{% extends "template_base.html" %}
+{% load static %}
+{% block content %}
+
+{% block title_head %} <h1 class="text-center">About me</h1> {% endblock title_head %}
+
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-body text-center">
+            {% if user_info.avatar %}
+                <img src="{{ user_info.avatar.url }}" class="rounded-circle mb-3" width="150" height="150" alt="Avatar">
+            {% else %}
+                <img src="{% static 'assets/img/user.png' %}" class="rounded-circle mb-3" width="150" height="150" alt="Avatar">
+            {% endif %}
+            
+            <h3>{{ request.user.first_name }} {{ request.user.last_name }}</h3>
+            <p class="text-muted">@{{ request.user.username }}</p>
+
+            <p><strong>Email:</strong> {{ request.user.email }}</p>
+            <p><strong>Birthdate:</strong> {{ user_info.birth_date }}</p>
+            <p><strong>Workplace:</strong> {{ user_info.workplace }}</p>
+            <p><strong>Skills:</strong> {{ user_info.skills }}</p>
+
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+
+{% endblock content %}

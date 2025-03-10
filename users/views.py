@@ -31,7 +31,17 @@ def register(request):
     if request.method == "POST":
         formContent = MyCreationForm(request.POST)
         if formContent.is_valid():
-            formContent.save()
+            user = formContent.save(commit=False)  # Guarda el usuario pero aún no lo envía a la BD
+            user.save()  # Ahora sí se guarda en la BD
+
+            # Guardar la información extra
+            InfoExtra.objects.create(
+                user=user,
+                birth_date=formContent.cleaned_data["birth_date"],
+                workplace=formContent.cleaned_data.get("workplace"),
+                skills=formContent.cleaned_data.get("skills"),
+                avatar=formContent.cleaned_data.get("avatar"),
+            )
             
             return redirect("login")
     else:
@@ -48,16 +58,28 @@ def edit_profile(request):
         formContent = MyUpdateForm(request.POST, request.FILES , instance=request.user)
         if formContent.is_valid():
 
+            user = formContent.save(commit=False) 
+
+            info_extra.birth_date = formContent.cleaned_data["birth_date"]
+            info_extra.workplace = formContent.cleaned_data.get("workplace")
+            info_extra.skills = formContent.cleaned_data.get("skills")
+
             if formContent.cleaned_data.get('avatar'):
                 info_extra.avatar = formContent.cleaned_data.get('avatar')
 
+            user.save()
             info_extra.save()
 
             formContent.save()
 
             return redirect("home")
     else:
-        formContent = MyUpdateForm(instance=request.user, initial={'avatar' : info_extra.avatar})
+        formContent = MyUpdateForm(instance=request.user, initial={
+            'avatar' : info_extra.avatar,
+            "birth_date": info_extra.birth_date,
+            "workplace": info_extra.workplace,
+            "skills": info_extra.skills,
+            })
 
     return render(request, "users/edit_profile.html", {"formContent": formContent})
 
@@ -65,3 +87,8 @@ class change_password(PasswordChangeView):
     template_name = 'users/change_password.html'
     form_class = MyPasswordChangeForm
     success_url = reverse_lazy('home')
+
+
+def about_me(request):
+    user_info = request.user.infoextra 
+    return render(request, "users/about_me.html", {"user_info": user_info})
