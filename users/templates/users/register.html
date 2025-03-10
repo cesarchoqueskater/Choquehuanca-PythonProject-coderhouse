@@ -2,12 +2,12 @@
 
 {% block content %}
 
-{% block title_head %} <h1>Register</h1> {% endblock title_head %}
+{% block title_head %} <h1>Register Account</h1> {% endblock title_head %}
 
 <form action="{% url "register" %}" method="POST">
     {% csrf_token %}
     {{ formContent }}
-    <input type="submit" value="Register">
+    <input type="submit" class="btn btn-dark btn-lg mt-4" value="Register">
 </form>
 
 

@@ -1,18 +1,80 @@
 {% extends "template_base.html" %}
 
-
+{% load static %}
+{% load bootstrap_icons %}
+    
 {% block content %}
 
-{% block title_head %} <h1>Details Blog: {{blog.title}}</h1> {% endblock title_head %}
+{% block title_head %} <h1>Details Blog</h1> {% endblock title_head %}
 
-<ul>
-    <li>Title: {{blog.title}}</li>
-    <li>Content: {{blog.content}}</li>
-    <li>Author: {{blog.author}}</li>
-    <li>Description: {{blog.description}}</li>
-    <li>Publication Date: {{blog.publication_date}}</li>
-    <li>Published: {{blog.is_published}}</li>
-    <li>Tags: {{blog.tags}}</li>
-</ul>
+
+<h1 class="mt-4">
+    <strong>{{blog.title}}</strong>
+</h1>
+<div class="row mt-3">
+    <div class="col-sm-12 col-md-6">
+        <ol class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Title</div>
+                {{blog.title}}
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Content</div>
+                {{blog.content}}
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Author</div>
+                {{blog.author}}
+              </div>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Description</div>
+                  {{blog.description}}
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Publication Date</div>
+                  {{blog.publication_date}}
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Published</div>
+                  {{blog.is_published}}
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Tags</div>
+                  <span class="badge rounded-pill text-bg-primary">{{blog.tags}}</span>
+                </div>
+              </li>
+          </ol>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="text-center">
+            <figure class="figure">
+                {% if blog.img_cover %}
+                    <img src="{{blog.img_cover.url }}" class="figure-img img-fluid rounded" alt="{{blog.title}}" width="400"/>
+                {% else %}
+                    <img src={% static "assets/img/not-found.jpg" %}  class="figure-img img-fluid rounded" alt="{{blog.title}}" width="400"/>
+                {% endif %}
+
+                {% if blog.img_cover %}
+                    <figcaption class="figure-caption">{{blog.title}}</figcaption>
+                {% else %}
+                    <figcaption class="figure-caption">No found image</figcaption>
+                {% endif %}        
+            </figure>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

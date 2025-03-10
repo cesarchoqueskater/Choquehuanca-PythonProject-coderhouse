@@ -14,7 +14,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
-    return render(request, 'home/index.html')
+    blogs = Blog.objects.all()
+    return render(request, 'home/index.html', {'blogs' : blogs})
 
 def sayHi(request,name,age):
     current_time = datetime.now()
@@ -25,7 +26,7 @@ def create_blog(request):
     formContent = CreateBlog()
 
     if request.method == "POST":
-        formContent = CreateBlog(request.POST)
+        formContent = CreateBlog(request.POST, request.FILES)
         if formContent.is_valid():
             title = formContent.cleaned_data.get('title')
             content = formContent.cleaned_data.get('content')
@@ -68,7 +69,7 @@ def update_blog(request, id):
     blog = Blog.objects.get(id=id)
     
     if request.method == "POST":
-        formContent = UpdateBlog(request.POST, instance=blog)
+        formContent = UpdateBlog(request.POST, request.FILES, instance=blog)
         if formContent.is_valid():
             formContent.save()
             return redirect('list_blog')

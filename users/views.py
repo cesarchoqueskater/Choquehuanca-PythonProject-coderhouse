@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm,UserCreationForm, UserC
 from django.contrib.auth import login as django_login
 from users.models import InfoExtra
 
-from users.forms import MyCreationForm,MyUpdateForm
+from users.forms import MyAuthenticationForm,MyCreationForm, MyPasswordChangeForm,MyUpdateForm
 
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
@@ -12,7 +12,7 @@ from django.urls import reverse_lazy
 
 def login(request):
     if request.method == "POST":
-        formContent = AuthenticationForm(request, data=request.POST)
+        formContent = MyAuthenticationForm(request, data=request.POST)
         if formContent.is_valid():
             usuario = formContent.get_user()
 
@@ -22,7 +22,7 @@ def login(request):
 
             return redirect("home")
     else:
-        formContent = AuthenticationForm()
+        formContent = MyAuthenticationForm()
 
     return render(request, "users/login.html", {"formContent": formContent})
 
@@ -63,4 +63,5 @@ def edit_profile(request):
 
 class change_password(PasswordChangeView):
     template_name = 'users/change_password.html'
+    form_class = MyPasswordChangeForm
     success_url = reverse_lazy('home')

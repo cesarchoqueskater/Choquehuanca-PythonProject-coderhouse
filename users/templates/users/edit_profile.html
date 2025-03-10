@@ -7,8 +7,9 @@
 <form action=" {% url 'edit_profile' %} " method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ formContent }}
-    <input type="submit" value="Edit Profile">
+    <input type="submit" class="btn btn-dark btn-lg mt-3" value="Edit Profile">
 </form>
 
-<a href=" {% url 'change_password' %} ">Change password</a>
+<a type="submit" class="btn active mt-3" href=" {% url 'change_password' %} ">Change password</a>
+
 {% endblock content %}

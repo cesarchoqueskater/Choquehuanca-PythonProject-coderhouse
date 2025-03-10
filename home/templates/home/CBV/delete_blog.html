@@ -7,8 +7,8 @@
 
 <form action="" method="POST">
     {% csrf_token %}
-    <p>Confirma que quiere eliminar el blog: {{blog}}</p>
-    <input type="submit" value="Delete">
+    <p>Confirma que desea eliminar el blog: <strong>{{blog}}</strong></p>
+    <button type="submit" class="btn btn-danger">Delete</button>
 </form>
 
 

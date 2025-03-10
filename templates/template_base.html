@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+  
   {% load static %}
+
+  {% load bootstrap_icons %}
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,7 +44,7 @@
                 </a>
                 <ul class="dropdown-menu text-small">
                   <li><a class="dropdown-item" href=" {% url "edit_profile" %} ">Edit Profile</a></li>
-                  <li><a class="dropdown-item" href="#">Profile</a></li>
+                  <li><a class="dropdown-item" href="#">About me</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
                     <form action="{% url 'logout' %}" method="POST">

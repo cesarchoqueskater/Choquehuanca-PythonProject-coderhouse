@@ -3,6 +3,37 @@
 
 {% block content %}
 
-{% block title_head %} <h1> Home View </h1> {% endblock title_head %}
+{% load static %}
+{% block title_head %} <h1> Blogs </h1> {% endblock title_head %}
     
+
+{% if blogs %}
+            
+        <div class="row">
+            {% for blog  in  blogs%}
+
+            <div class="col-sm-12 col-md-6 col-lg-3 mt-3">
+                <div class="card" style="width: 18rem;">
+                    {% if blog.img_cover %}
+                        <img src="{{blog.img_cover.url }}" class="card-img-top" alt="{{blog.title}}"/>
+                    {% else %}
+                        <img src={% static "assets/img/not-found.jpg" %}  class="card-img-top" alt="{{blog.title}}"/>
+                    {% endif %}
+                    <div class="card-body">
+                    <h5 class="card-title">{{blog.title}}</h5>
+                    <p class="card-text">{{blog.description}}</p>
+                    <a href={% url "details_blog" blog.id %} class="btn btn-primary">See more</a>
+                    </div>
+                </div>
+            </div>
+            
+            {% endfor %}
+        </div>
+
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                No found Blog
+            </div>
+        {% endif %}
+
 {% endblock content %}

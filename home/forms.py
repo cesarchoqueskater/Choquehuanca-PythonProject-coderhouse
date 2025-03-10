@@ -10,11 +10,11 @@ class CreateBlog(forms.Form):
     publication_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class' : 'form-control'}), required=False)
     is_published = forms.BooleanField(required=False,widget=forms.CheckboxInput(attrs={'type': 'checkbox','class': 'form-check-input'}))
     tags = forms.CharField(required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
-    img_cover = forms.ImageField(required=False)
+    img_cover = forms.ClearableFileInput(attrs={'class': 'form-control'})
 
 class SearchBlog(forms.Form):
-    title = forms.CharField(max_length=100, required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
-    author = forms.CharField(max_length=100, required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    title = forms.CharField(max_length=100, required=False,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Title'}))
+    author = forms.CharField(max_length=100, required=False,widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder':'Author'}))
 
 #class UpdateBlog(forms.Form):
 class UpdateBlog(forms.ModelForm):
@@ -30,6 +30,7 @@ class UpdateBlog(forms.ModelForm):
             'publication_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'is_published': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'tags': forms.TextInput(attrs={'class': 'form-control'}),
+            'img_cover': forms.ClearableFileInput(attrs={'class': 'form-control'})
         }            
     #title = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class': 'form-control'}))
     #content = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
